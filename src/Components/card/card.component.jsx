@@ -7,7 +7,7 @@ const Card = ({ eventName, imageUrl }) => (
   <div className="card"   >
     <img
       className="card-img-top" 
-      src={`url(${imageUrl})`
+      src={imageUrl
       } alt="No image" />
     <div className="card-body">
     <h5 className="card-title">{eventName}</h5>
