@@ -22,8 +22,8 @@ class Directory extends React.Component {
   render() {
     return (
       <div className='directory-menu'>
-        {this.state.events.map(({ eventId, ...otherSectionProps }) => (
-          <Card key={eventId} {...otherSectionProps} />
+        {this.state.events.map(({ eventId, eventName, imageUrl }) => (
+          <Card key={eventId} eventName={ eventName} imageUrl={imageUrl} eventId={eventId}  />
         ))}
       </div>
     );

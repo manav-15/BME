@@ -7,6 +7,10 @@ class EventService{
     getEvents(){
         return axios.get(EVENT_API_BASE_URL);
     }
+    
+    getEventById(id){
+        return axios.get(EVENT_API_BASE_URL+'/'+id);
+    }
 
 }
 
