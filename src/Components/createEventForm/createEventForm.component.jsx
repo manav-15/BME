@@ -57,7 +57,7 @@ class createEventForm extends Component {
         e.preventDefault();
         let event = {eventName:this.state.eventName,imageUrl:this.state.imageUrl};
         console.log(event);
-        axios.post("http://localhost:8080/api/v1/events",event).then(window.location.href='/add-event');
+        axios.post("http://localhost:8080/api/v1/events",event).then(() => window.location.href='/add-event');
 
       };
 
@@ -68,7 +68,7 @@ class createEventForm extends Component {
     render() {
         return (
             <div className="container">
-                <div className="row">
+                <div className="roow">
                 <div className="card col-md-6 offset-md-3 offset-md-3">
                     <h3 className="text-center" > Add Your Event</h3>
                     <div className="card-body">
