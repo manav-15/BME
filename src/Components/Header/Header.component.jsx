@@ -2,8 +2,17 @@ import React from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Header = () => {
-    
+import { AuthenticatedTemplate, useIsAuthenticated } from "@azure/msal-react";
+import {SignInButton } from "./SignInButton";
+import {SignOutButton } from "./SignOutButton";
+
+/**
+ * Renders the navbar component with a sign-in or sign-out button depending on whether or not a user is authenticated
+ * @param props 
+ */
+
+const Header = (props) => {
+    const isAuthenticated = useIsAuthenticated();
     
     return (
         <div>
@@ -21,9 +30,16 @@ const Header = () => {
                         <li className="nav-item">
                             <a className="nav-link" href="/add-event">Add Event</a>
                         </li>
+                        <AuthenticatedTemplate>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Profile</a>
+                            <a className="nav-link" href="/profile">Profile</a>
                         </li>
+                        </AuthenticatedTemplate>
+                        
+                        <li className="nav-item">
+                            {isAuthenticated ? <SignOutButton /> : <SignInButton />}
+                        </li>
+                        
                         {/* <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Dropdown

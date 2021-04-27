@@ -5,11 +5,43 @@
     margin-top: 50px;
 }
 
+.eventInfo{
+    text-align: left;
+}
 .eventTitle{
-    color: #343a40;
-    font-family: Roboto;
+    // color: #343a40;
+    // font-family: Roboto;
+
+    font-family: times, Times New Roman, times-roman, georgia, serif;
+	font-size: 48px;
+	line-height: 40px;
+	letter-spacing: -1px;
+	color: #444;
+    margin: 0 0 0 0;
+	padding: 0 0 0 0;
+    font-weight: 100;
+    text-align: left;
 }
 
+.eventOrganiser{
+    font-family: times, Times New Roman, times-roman, georgia, serif;
+		font-size: 28px;
+		line-height: 40px;
+		letter-spacing: -1px;color: #444;
+        text-align: left;
+}
+
+.eventDescription{
+    font-family: times, Times New Roman, times-roman, georgia, serif;
+		font-size: 18px;
+		line-height: 20px;
+		color: #444;
+        text-align: left;
+}
+
+.eventFindMore{
+    margin-bottom: 20px;
+}
 .eventInfoImage{
     width: 100%;
 }

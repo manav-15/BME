@@ -36,9 +36,24 @@ class eventInfoComponent extends React.Component {
                     } alt="No image" />
                   </div>
                   <div class="col-md">
-                    <div className="eventTitle">
-                      <h1>{this.state.event.eventName}</h1>
-                    </div>
+                    <div className="eventInfo">
+                      <div className="eventTitle">
+                        <h1>{this.state.event.eventName}</h1>
+                      </div>
+                      <div className="eventOrganiser">
+                        <p>By: Event Organiser</p>
+                      </div>
+                      <div className="eventDescription">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis omnis ut veniam impedit! 
+                          Architecto inventore dolorum animi fuga aliquam explicabo aliquid natus,
+                          in amet, illo aspernatur modi quibusdam quo voluptates!</p>
+                      </div>
+                      <div className="eventFindMore">
+                        <a href="#">Find More</a>
+                      </div>
+
+                      <button className="btn btn-primary">Book This Event</button>
+                      </div>
                     
                   </div>
                   <div class="col-md">
