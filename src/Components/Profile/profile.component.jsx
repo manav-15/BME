@@ -4,11 +4,23 @@ import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/
 import { loginRequest } from "../../authConfig";
 import { callMsGraph } from "../../graph";
 import {ProfileData} from "./profileData.component"
-
+import EventService from '../../Services/EventService';
 
 const ProfileContent = () => {
     const { instance, accounts } = useMsal();
     const [graphData, setGraphData] = useState(null);
+
+    function userExists(email){
+        EventService.userExists(email).then((res) => {
+            console.log(res.data);
+            if(res.data){
+                console.log("true");
+            }else{
+                console.log("fALSE")
+            }
+        })
+
+    }
 
     function RequestProfileData() {
         // Silently acquires an access token which is then attached to a request for MS Graph data
@@ -18,6 +30,7 @@ const ProfileContent = () => {
         }).then((response) => {
             callMsGraph(response.accessToken).then(response => setGraphData(response));
         });
+        //userExists(graphData.userPrincipalName);
     }
 
     return (
