@@ -10,7 +10,7 @@ import EventInfoComponent from './Components/Event-Info/eventInfo.component';
 function App() {
   return (
     <div >
-    {/* <Header/> */}
+    <Header/>
     <Router>
     <div className="App">
       <Switch>
