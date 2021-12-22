@@ -15,15 +15,16 @@ class Directory extends React.Component {
   }
   componentDidMount(){
     EventService.getEvents().then((res) =>{
-      this.setState({events: res.data});
+      this.setState({events: res.data.data});
+      console.log(this.state.events)
     });
-    console.log(this.state.events);
+    // console.log(this.state.events);
   }
   render() {
     return (
       <div className='directory-menu'>
-        {this.state.events.map(({ eventId, eventName, imageUrl }) => (
-          <Card key={eventId} eventName={ eventName} imageUrl={imageUrl} eventId={eventId}  />
+        {this.state.events.map(({ event_id, event_name, image_url }) => (
+          <Card key={event_id} eventName={ event_name} imageUrl={image_url} eventId={event_id}  />
         ))}
       </div>
     );

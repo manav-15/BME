@@ -1,0 +1,5 @@
+-> Work on Event-Info Page
+-> Add other fields in Post Event form
+-> Add those fields in Cards
+
+-> AUTH
