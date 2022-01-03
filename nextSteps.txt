@@ -3,3 +3,5 @@
 -> Add those fields in Cards
 
 -> AUTH
+-- Session management is configured in backend
+-- Configure frontend auth for managing sessions
