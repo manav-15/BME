@@ -1,6 +1,9 @@
 const express = require('express');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
+const CLIENT_HOME_PAGE_URL = "http://localhost:3000";
+const cookieParser = require("cookie-parser"); // parse cookie header
+
   
 require('./passport');
 app = express();
@@ -27,7 +30,18 @@ db.sequelize.sync();
 //Configure Session Storage
 app.use(cookieSession({
   name: 'session-name',
-  keys: ['key1', 'key2']
+  keys: ['key1', 'key2'],
+  maxAge: 24 * 60 * 60 * 100
+  
+}))
+
+// parse cookies
+app.use(cookieParser());
+
+app.use(cors({
+  origin: "http://localhost:3000", // allow to server to accept request from different origin
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true // allow session cookie from browser to pass through
 }))
 
 //Configure Passport
@@ -35,19 +49,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-//Unprotected Routes
-app.get('/', (req, res) => {
-  res.send('<h1>Home</h1>')
-});
 
-app.get('/failed', (req, res) => {
-  res.send('<h1>Log in Failed :(</h1>')
-});
 
-// Middleware - Check user is Logged in
-const checkUserLoggedIn = (req, res, next) => {
-  req.user ? next(): res.sendStatus(401);
-}
+
+// app.get('/failed', (req, res) => {
+//   res.send('<h1>Log in Failed :(</h1>')
+// });
+
+
 
 // //Protected Route.
 // app.get('/profile', checkUserLoggedIn, (req, res) => {
@@ -55,21 +64,7 @@ const checkUserLoggedIn = (req, res, next) => {
 //   res.send(`<h1>${req.user.name}'s Profile Page</h1>`)
 // });
 
-// Auth Routes
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
-  function(req, res) {
-    res.redirect('/profile');
-  }
-);
-
-//Logout
-app.get('/logout', (req, res) => {
-    req.session = null;
-    req.logout();
-    res.redirect('/');
-})
 
 
 // make server object that contain port property and the value for our server.
@@ -80,16 +75,27 @@ var server = {
 // routers
 const eventsRouter = require('./routes/events');
 const profileRouter = require('./routes/profile')
-
+const authRouter = require('./routes/auth-routes')
 
 // use the modules
-app.use(cors())
+
 app.use(bodyParser.json());
+
+
+//isAuthenticated
+// app.get('/auth', checkUserLoggedIn, (req,res) => {
+//   res.sendStatus(200)
+//   // res.json({
+//   //   status: 200,
+//   //   message: "User is authenticated"
+//   // })
+// })
 
 //use router
 
 app.use('/events', eventsRouter);
-app.use('/profile', profileRouter)
+app.use('/profile', profileRouter);
+app.use('/auth', authRouter);
 
 // starting the server
 app.listen( server.port , () => console.log(`Server started, listening port: ${server.port}`));

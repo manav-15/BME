@@ -28,14 +28,14 @@ class eventInfoComponent extends React.Component {
               <h1>{this.props.match.params.eventId}</h1>
               {/* <h1>{this.state.event.eventName}</h1> */}
               <div className="container">
-                <div class="row">
-                  <div class="col-md">
+                <div className="row">
+                  <div className="col-md">
                   <img
                   className = "eventInfoImage"
                     src={this.state.event.image_url
                     } alt="No image" />
                   </div>
-                  <div class="col-md">
+                  <div className="col-md">
                     <div className="eventInfo">
                       <div className="eventTitle">
                         <h1>{this.state.event.eventName}</h1>
@@ -56,7 +56,7 @@ class eventInfoComponent extends React.Component {
                       </div>
                     
                   </div>
-                  <div class="col-md">
+                  <div className="col-md">
                     One of three columns
                   </div>
                 </div>

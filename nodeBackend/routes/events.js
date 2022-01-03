@@ -1,5 +1,11 @@
 const express = require('express'),
-  router = express.Router();
+router = express.Router();
+db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '123456789',
+  database: 'event_management_system'
+})
 
 // get event lists
 router.get('/list', function(req, res) {
