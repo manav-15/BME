@@ -38,8 +38,7 @@ class createEventForm extends Component {
         //console.log(event.target.files[0].size)
         this.getBase64(event.target.files[0]).then(
             data => {
-                //console.log(data)
-                //data = data.slice(23);
+                
                 this.setState( {
                     selectedFile:event.target.files[0] ,
                     imageUrl: data 

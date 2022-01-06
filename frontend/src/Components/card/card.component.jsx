@@ -15,7 +15,7 @@ const Card = ({ eventName, imageUrl,eventId }) => {
     for (var i = 0; i < len; i++) {
         binary += String.fromCharCode( bytes[ i ] );
     }
-    return window.btoa( binary );
+    return binary;
 }
 
   const img_url = _arrayBufferToBase64(imageUrl.data);
@@ -27,8 +27,7 @@ const Card = ({ eventName, imageUrl,eventId }) => {
       <div className="card"   >
     <img
       className="card-img-top" 
-      src={imageUrl
-      } alt="No image" />
+      src={img_url} alt=""/>
     <div className="card-body">
     <h5 className="card-title">{eventName}</h5>
     <Link to= {"/event-info/"+eventId} >&#10097; Find More about the event</Link>
