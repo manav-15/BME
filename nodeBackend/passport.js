@@ -6,15 +6,16 @@ const User = db.users;
 
 
 passport.serializeUser(function(user, done) {
+  //console.log(user)
   done(null, user);
   });
   
-passport.deserializeUser(function(id, done) {
+passport.deserializeUser(function(user, done) {
   //console.log(id);
-  User.findByPk(id.id)
-  .then(user => {
+  User.findByPk(user.id)
+  .then(currentUser => {
     //console.log(user)
-    done(null, user.dataValues);
+    done(null, currentUser.dataValues);
   })
   .catch(e => {
     //console.log(e)
@@ -29,21 +30,38 @@ passport.use(new GoogleStrategy({
   },
   async function(accessToken, refreshToken, profile, cb) {
 
-    const currentUser = await User.findOne({
-      where : {email : profile._json.email}
+    User.findOrCreate({
+      where: { email: profile._json.email },
+      defaults: {
+        name: profile._json.name
+      }
+    })
+    .then(([user,created])=> {
+      //console.log(user.toJSON())
+      return cb(null, user.dataValues);
+    })
+    .catch(e => {
+      console.log(e);
+      done(new Error(e));
     });
 
-    if(!currentUser){
-      const newUser = await User.create({
-        name: profile._json.name,
-        email : profile._json.email
-      })
-      if(newUser){
-        //console.log(newUser)
-        return cb(null, newUser.dataValues);
-      }
-    }
-    //console.log(currentUser)
-    return cb(null, currentUser.dataValues);
+    
+
+    // const currentUser = await User.findOne({
+    //   where : {email : profile._json.email}
+    // });
+
+    // if(!currentUser){
+    //   const newUser = await User.create({
+    //     name: profile._json.name,
+    //     email : profile._json.email
+    //   })
+    //   if(newUser){
+    //     //console.log(newUser)
+    //     return cb(null, newUser.dataValues);
+    //   }
+    // }
+    // //console.log(currentUser)
+    // return cb(null, currentUser.dataValues);
   }
 ));

@@ -79,9 +79,9 @@ const authRouter = require('./routes/auth-routes')
 
 // use the modules
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '25mb'}));
 
-
+app.use(bodyParser.urlencoded({limit: '25mb', extended: true}));
 //isAuthenticated
 // app.get('/auth', checkUserLoggedIn, (req,res) => {
 //   res.sendStatus(200)

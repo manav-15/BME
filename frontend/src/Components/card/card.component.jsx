@@ -5,9 +5,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-const Card = ({ eventName, imageUrl,eventId }) => (
-  
-  <div className="card"   >
+const Card = ({ eventName, imageUrl,eventId }) => {
+  //console.log(imageUrl.data)
+
+  function _arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+}
+
+  const img_url = _arrayBufferToBase64(imageUrl.data);
+  console.log(img_url)
+  //console.log(img_url)
+
+    return (
+
+      <div className="card"   >
     <img
       className="card-img-top" 
       src={imageUrl
@@ -22,7 +39,12 @@ const Card = ({ eventName, imageUrl,eventId }) => (
     
   </div> 
   </div>
+
+
+    );
+
   
-);
+  
+  };
 
 export default Card;
