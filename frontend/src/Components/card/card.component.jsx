@@ -19,7 +19,7 @@ const Card = ({ eventName, imageUrl,eventId }) => {
 }
 
   const img_url = _arrayBufferToBase64(imageUrl.data);
-  console.log(img_url)
+  
   //console.log(img_url)
 
     return (
