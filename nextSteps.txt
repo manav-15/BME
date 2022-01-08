@@ -1,7 +1,10 @@
 -> Work on Event-Info Page
--> Add other fields in Post Event form
+-> Add other fields in Post Event form - Done
 -> Add those fields in Cards
 
 -> AUTH
--- Session management is configured in backend
--- Configure frontend auth for managing sessions
+-- Add event only accessed by admins(fe+be)
+-- Add event link shown only to admins (fe)
+
+--> Show admin's created admins
+--> User booked events

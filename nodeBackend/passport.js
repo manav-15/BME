@@ -42,10 +42,10 @@ passport.use(new GoogleStrategy({
     })
     .catch(e => {
       console.log(e);
-      done(new Error(e));
+      return cb(err, user.dataValues);
+      //done(new Error(e));
     });
 
-    
 
     // const currentUser = await User.findOne({
     //   where : {email : profile._json.email}

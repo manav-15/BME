@@ -14,6 +14,7 @@ class Directory extends React.Component {
     };
   }
   componentDidMount(){
+    
     EventService.getEvents().then((res) =>{
       this.setState({events: res.data.events});
       console.log(res.data.events)

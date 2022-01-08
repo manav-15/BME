@@ -94,7 +94,7 @@ class createEventForm extends Component {
             imageUrl:this.state.imageUrl
             };
         console.log(event);
-        axios.post("http://localhost:4040/events/new",event)
+        axios.post("http://localhost:4040/events/new",event,{withCredentials:true})
         .then(res => {
             window.alert("Event added successfully!!! :)");
             window.location.href='/add-event'

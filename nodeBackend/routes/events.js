@@ -10,7 +10,16 @@ router = express.Router();
 const db = require("../models")
 const Event = db.events;
 
-
+const checkUserLoggedIn = (req, res, next) => {
+  if (!req.user) {
+    res.status(401).json({
+      authenticated: false,
+      message: "user has not been authenticated"
+    });
+  } else {
+    next();
+  }
+}
 
 
 // get event lists
@@ -51,18 +60,20 @@ router.get('/:id', function(req, res) {
 });
 
 // create new event
-router.post('/new', async function(req, res) {
-
+router.post('/new', checkUserLoggedIn, async function(req, res) {
+  //console.log(req)
   const startTime = new Date(req.body.startDate + ' ' + req.body.startTime);
-  
   const endTime = new Date(req.body.endDate + ' ' + req.body.endTime);
-  // const start = new Date(2021,0,15,10,0,0);
-  // const end = new Date(2021,0,25,23,59,59)
+
+  // res.json({
+  //   status:200
+  // })
   Event.create({
     name : req.body.eventName,
     organizer: req.body.eventOrganizer,
     startTime: startTime,
     endTime: endTime,
+    userEmail: req.user.email,
     imageUrl: req.body.imageUrl
   }).then(event => {
     res.json({

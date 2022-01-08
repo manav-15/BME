@@ -24,6 +24,10 @@ module.exports = (sequelize, Sequelize) => {
         endTime: {
             type: Sequelize.DATE,
             // allowNull: false,
+        },
+        userEmail: {
+            type: Sequelize.STRING,
+            allowNull: false
         }
     });
   
