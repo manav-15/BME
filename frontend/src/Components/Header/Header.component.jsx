@@ -5,7 +5,8 @@ import axios from 'axios';
 
 const Header = () => {
     const [isAuth, setisAuth] = useState(false);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
+    const [isAdmin, setisAdmin] = useState(false);
     const [err, setErr] = useState(null);
 
     useEffect(() => {
@@ -23,8 +24,13 @@ const Header = () => {
         throw new Error("failed to authenticate user");
       })
       .then(responseJson => {
+        console.log("here")
         setisAuth(true);
         setUser(responseJson.user);
+        // console.log(responseJson.user);
+        if(responseJson.user.isAdmin) setisAdmin(true);
+        
+        //console.log(user)
         // this.setState({
         //   authenticated: true,
         //   user: responseJson.user
@@ -38,7 +44,7 @@ const Header = () => {
         //   error: "Failed to authenticate user"
         // });
       });
-    }, [isAuth]);
+    }, []);
     
     const handleSignInClick = () => {
         // Authenticate using via passport api in the backend
@@ -70,9 +76,11 @@ const Header = () => {
                         <li className="nav-item active">
                             <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                         </li>
-                        <li className="nav-item">
+                        {isAdmin &&
+                            <li className="nav-item">
                             <a className="nav-link" href="/add-event">Add Event</a>
-                        </li>
+                            </li>
+                        }
                         { isAuth &&
                             <li className="nav-item">
                             <a className="nav-link" href="#">Profile</a>

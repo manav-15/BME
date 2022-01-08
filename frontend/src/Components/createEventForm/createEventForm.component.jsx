@@ -97,7 +97,7 @@ class createEventForm extends Component {
         axios.post("http://localhost:4040/events/new",event,{withCredentials:true})
         .then(res => {
             window.alert("Event added successfully!!! :)");
-            window.location.href='/add-event'
+            //window.location.href='/add-event'
         })
         .catch(e => {
             window.alert("Error encontered! :(");

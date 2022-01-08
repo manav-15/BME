@@ -3,8 +3,8 @@
 -> Add those fields in Cards
 
 -> AUTH
--- Add event only accessed by admins(fe+be)
--- Add event link shown only to admins (fe)
+-- Add event only accessed by admins(fe+be) -Done
+-- Add event link shown only to admins (fe) - Done
 
---> Show admin's created admins
+--> Show admin's created events - next
 --> User booked events

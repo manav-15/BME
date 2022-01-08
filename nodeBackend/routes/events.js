@@ -9,6 +9,7 @@ router = express.Router();
 
 const db = require("../models")
 const Event = db.events;
+const User = db.users;
 
 const checkUserLoggedIn = (req, res, next) => {
   if (!req.user) {
@@ -21,10 +22,47 @@ const checkUserLoggedIn = (req, res, next) => {
   }
 }
 
+checkUserAdmin = async (req,res,next) => {
+  if(!req.user){
+    res.status(401).json({
+      authenticated: false,
+      message: "User has not been authenticated"
+      
+    });
+    console.log('User has not been authenticated');
+
+  } else if(!req.user.isAdmin){
+    res.status(401).json({
+      authenticated: true,
+      message: "User is not admin"
+    })
+    console.log('User is not admin')
+
+  }else{
+
+    //check again in DB whether the user is an admin
+    const isAdmin = await User.findByPk(req.user.id, {
+      attributes : ['isAdmin']
+    });
+    if(!isAdmin.dataValues.isAdmin){
+      res.status(401).json({
+        authenticated: true,
+        message: "User is not admin/FE false data"
+      })
+      console.log("User is not admin/FE false data")
+    }else{
+      console.log("Admin user")
+      next();
+    }
+  }
+
+
+}
+
 
 // get event lists
 router.get('/list', async(req, res) => {
-  
+
   const events = await Event.findAll();
   //console.log(events);
 
@@ -60,7 +98,7 @@ router.get('/:id', function(req, res) {
 });
 
 // create new event
-router.post('/new', checkUserLoggedIn, async function(req, res) {
+router.post('/new', checkUserAdmin, async function(req, res) {
   //console.log(req)
   const startTime = new Date(req.body.startDate + ' ' + req.body.startTime);
   const endTime = new Date(req.body.endDate + ' ' + req.body.endTime);
