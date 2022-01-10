@@ -59,8 +59,36 @@ checkUserAdmin = async (req,res,next) => {
 
 }
 
+router.get('/created',checkUserAdmin,  (req,res) => {
+  // console.log(req)
+  // console.log("here")
+  const email = req.user.email;
+  
+  Event.findAll({
+    where: {
+      userEmail : email
+    }
+  })
+  .then(events => {
+    res.json({
+      status: 200,
+      events,
+      message: "Created events retrieved successfully"
+    })
+    console.log("Created events retrieved successfully")
+  })
+  .catch(e => {
+    console.log(e.original.sqlMessage);
+    res.json({
+      status: 500,
+      error: e.original.sqlMessage
+    })
+  })
 
-// get event lists
+
+})
+
+// // get event lists
 router.get('/list', async(req, res) => {
 
   const events = await Event.findAll();
@@ -96,6 +124,7 @@ router.get('/:id', function(req, res) {
   //   })
   // })
 });
+
 
 // create new event
 router.post('/new', checkUserAdmin, async function(req, res) {
@@ -144,5 +173,10 @@ router.post('/new', checkUserAdmin, async function(req, res) {
   //   })
   // })
 });
+
+
+
+
+
 
 module.exports = router;

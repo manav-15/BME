@@ -7,4 +7,5 @@
 -- Add event link shown only to admins (fe) - Done
 
 --> Show admin's created events - next
+    -- study on react contexts
 --> User booked events

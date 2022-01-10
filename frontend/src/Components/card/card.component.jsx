@@ -25,19 +25,17 @@ const Card = ({ eventName, imageUrl,eventId }) => {
     return (
 
       <div className="card"   >
-    <img
-      className="card-img-top" 
-      src={img_url} alt=""/>
-    <div className="card-body">
-    <h5 className="card-title">{eventName}</h5>
-    <Link to= {"/event-info/"+eventId} >&#10097; Find More about the event</Link>
-    {/* <p className="card-text">{eventName}</p>
+        <img
+          className="card-img-top"
+          src={img_url} alt="" />
+        <div className="card-body">
+          <h5 className="card-title">{eventName}</h5>
+          <Link to={"/event-info/" + eventId} >&#10097; Find More about the event</Link>
+          {/* <p className="card-text">{eventName}</p>
     <button className="btn btn-primary">Book This Event</button><br></br><br></br> */}
-    
-    
-    
-  </div> 
-  </div>
+
+        </div>
+      </div>
 
 
     );
