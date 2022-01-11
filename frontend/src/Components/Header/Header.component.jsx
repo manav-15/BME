@@ -1,49 +1,59 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { setUser, selectUser } from './userSlice';
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
 const Header = () => {
     const [isAuth, setisAuth] = useState(false);
-    const [user, setUser] = useState(null);
-    const [isAdmin, setisAdmin] = useState(false);
+    //const [user, setUser] = useState(null);
+    //const [isAdmin, setisAdmin] = useState(false);
     const [err, setErr] = useState(null);
+
+    const user = useSelector(selectUser);
+    const dispatch = useDispatch()
 
     useEffect(() => {
         fetch("http://localhost:4040/auth", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true
-      }
-    })
-      .then(response => {
-        if (response.status === 200) return response.json();
-        throw new Error("failed to authenticate user");
-      })
-      .then(responseJson => {
-        console.log("here")
-        setisAuth(true);
-        setUser(responseJson.user);
-        // console.log(responseJson.user);
-        if(responseJson.user.isAdmin) setisAdmin(true);
-        
-        //console.log(user)
-        // this.setState({
-        //   authenticated: true,
-        //   user: responseJson.user
-        // });
-      })
-      .catch(error => {
-          setisAuth(false);
-          setErr("Failed to authenticate user");
-        // this.setState({
-        //   authenticated: false,
-        //   error: "Failed to authenticate user"
-        // });
-      });
+            method: "GET",
+            credentials: "include",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Credentials": true
+            }
+        })
+            .then(response => {
+                if (response.status === 200) return response.json();
+                throw new Error("failed to authenticate user");
+            })
+            .then(responseJson => {
+                console.log("here")
+                setisAuth(true);
+                //setUser(responseJson.user);
+                //console.log(responseJson.user);
+                dispatch(setUser(responseJson.user));
+                // if(responseJson.user.isAdmin){
+                //     setisAdmin(true);
+
+                // };
+
+                //console.log(user)
+                // this.setState({
+                //   authenticated: true,
+                //   user: responseJson.user
+                // });
+            })
+            .catch(error => {
+                setisAuth(false);
+                setErr("Failed to authenticate user");
+                // this.setState({
+                //   authenticated: false,
+                //   error: "Failed to authenticate user"
+                // });
+            });
     }, []);
     
     const handleSignInClick = () => {
@@ -76,7 +86,7 @@ const Header = () => {
                         <li className="nav-item active">
                             <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                         </li>
-                        {isAdmin &&
+                        {user && user.isAdmin &&
                             <li className="nav-item">
                             <a className="nav-link" href="/add-event">Add Event</a>
                             </li>

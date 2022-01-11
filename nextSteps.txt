@@ -9,3 +9,8 @@
 --> Show admin's created events - next
     -- study on react contexts
 --> User booked events
+
+12-01-22 -> Understand REDUX and implement context and start working on adding fields in Cards - 1st part 
+            almost done.
+13       -> Work on Event-Info Page and start on user booked events
+14       -> USER BOOKED EVENTS
