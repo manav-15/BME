@@ -14,3 +14,6 @@
             almost done.
 13       -> Work on Event-Info Page and start on user booked events
 14       -> USER BOOKED EVENTS
+
+Subsequent -> Loading Icons
+           -> Parallel requests for faster loading

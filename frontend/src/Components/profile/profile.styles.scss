@@ -1,0 +1,18 @@
+//not used at the moment
+.profile{
+    //display: flex;
+    position: relative;
+   // flex-wrap: wrap;
+    top: 120px;
+}
+
+.menu {
+    margin: auto;
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    // overflow-x: scroll;
+    position: relative;
+    
+  }

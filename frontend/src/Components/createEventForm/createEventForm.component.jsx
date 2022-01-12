@@ -97,11 +97,11 @@ class createEventForm extends Component {
         axios.post("http://localhost:4040/events/new",event,{withCredentials:true})
         .then(res => {
             window.alert("Event added successfully!!! :)");
-            //window.location.href='/add-event'
+            window.location.href='/add-event'
         })
         .catch(e => {
             window.alert("Error encontered! :(");
-            console.log(e);
+            console.log(e.response);
         });
 
     };
@@ -112,7 +112,7 @@ class createEventForm extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container pt-3">
                 <h3 className="text-center" > Add Your Event</h3><br/>
                 <div className="row justify-content-md-center">
                 <div className="col-sm"></div>

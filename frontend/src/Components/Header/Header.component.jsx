@@ -48,6 +48,7 @@ const Header = () => {
             })
             .catch(error => {
                 setisAuth(false);
+                dispatch(setUser(null));
                 setErr("Failed to authenticate user");
                 // this.setState({
                 //   authenticated: false,
@@ -91,7 +92,7 @@ const Header = () => {
                             <a className="nav-link" href="/add-event">Add Event</a>
                             </li>
                         }
-                        { isAuth &&
+                        { user &&
                             <li className="nav-item">
                             <a className="nav-link" href="/profile">Profile</a>
                             </li>
@@ -107,7 +108,7 @@ const Header = () => {
                                 <a className="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li> */}
-                        {isAuth ? (
+                        {user ? (
                             <li className="nav-item nav-link" onClick = {handleLogoutClick}> Logout</li>
                         ): (
                             <li className="nav-item nav-link" onClick = {handleSignInClick}> Sign In</li>

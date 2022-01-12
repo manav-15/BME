@@ -12,7 +12,7 @@ function App() {
     <div >
     <Header/>
     <Router>
-    <div className="App">
+    <div>
       <Switch>
       <Route path="/" exact component={Directory}></Route>
       <Route path="/add-event" exact component={createEventForm}></Route>

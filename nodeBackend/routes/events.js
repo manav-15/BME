@@ -151,9 +151,8 @@ router.post('/new', checkUserAdmin, async function(req, res) {
     //console.log(event)
   })
   .catch(e => {
-    //console.log(e.original.sqlMessage);
-    res.json({
-      status: 500,
+    console.log(e);
+    res.status(500).json({
       error: e.original.sqlMessage
     })
   });
