@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import './card.styles.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { arrayBufferToBase64 } from '../../Functions/bufferToBase64';
 
 
 const Card = ({ eventName, imageUrl, eventId, startTime, endTime, organizer }) => {
@@ -22,7 +22,7 @@ const Card = ({ eventName, imageUrl, eventId, startTime, endTime, organizer }) =
     return binary;
 }
 
-  const img_url = _arrayBufferToBase64(imageUrl.data);
+  const img_url = arrayBufferToBase64(imageUrl.data);
   
   //console.log(img_url)
 
@@ -32,8 +32,8 @@ const Card = ({ eventName, imageUrl, eventId, startTime, endTime, organizer }) =
           <img
             className="card-img-top"
             src={img_url} alt="" />
-          <div className="card-body">
-            <h5 className="card-title mb-1 mt-0">{eventName}</h5>
+          <div className="card-body mt-1">
+            <h5 className="card-title mb-0 mt-0">{eventName}</h5>
             <p className='card-text mt-0'>
               <b>By</b> : {organizer}
               <br></br>
@@ -42,6 +42,8 @@ const Card = ({ eventName, imageUrl, eventId, startTime, endTime, organizer }) =
               <b>Ends at</b> : {endTime}
               <br></br>
               <Link to={"/event-info/" + eventId} >&#10097; Find More about the event</Link>
+              {/* <br></br>
+              <Link to={"/event-info/" + eventId} >&#10097; Find More about the event</Link> */}
 
             </p>
             {/* <ul class="list-group list-group-flush">

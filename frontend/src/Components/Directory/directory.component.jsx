@@ -27,7 +27,7 @@ class Directory extends React.Component {
   render() {
     return (
       <div className='container-fluid mt-5 pt-5 mb-3'>
-        <div className="row row-cols-1 row-cols-md-4 g-0">
+        <div className="row row-cols-1 row-cols-md-2 row-cols-md-4 g-2">
         {this.state.events.map(({ id, name, imageUrl, startTime, endTime, organizer }) => (
           <Card key={id} eventName={name} imageUrl={imageUrl} eventId={id} startTime={startTime} endTime={endTime} organizer={organizer} />
         ))}

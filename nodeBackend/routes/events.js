@@ -113,16 +113,23 @@ router.get('/list', async(req, res) => {
 
 //get event by id
 router.get('/:id', function(req, res) {
-  let id = req.params.id;
-  let sql = `SELECT * FROM events  where event_id = ${id}`;
-  // db.query(sql, function(err, data, fields) {
-  //   if (err) throw err;
-  //   res.json({
-  //     status: 200,
-  //     data,
-  //     message: "Event retrieved successfully"
-  //   })
-  // })
+  const id = req.params.id;
+  
+  Event.findByPk(id)
+  .then(event => {
+    res.json({
+      status: 200, 
+      event,
+      message: "Event retrieved successfully"
+    })
+  })
+  .catch(e => {
+    console.log(e);
+    res.status(500).json({
+      error: e.original.sqlMessage
+    })
+  })
+
 });
 
 
