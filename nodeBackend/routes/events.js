@@ -56,8 +56,117 @@ checkUserAdmin = async (req,res,next) => {
     }
   }
 
-
 }
+
+
+//BOOKED EVENTS
+//book event
+router.post('/book', checkUserLoggedIn, async(req,res) => {
+  const userId = req.body.userId;
+  const eventId = req.body.eventId;
+
+  if(req.user.id != userId){
+    res.status(401).json({
+      message: "Unauthorized"
+    })
+  }
+
+  User.findByPk(userId)
+  .then(user => {
+    user.addEvent(eventId)
+    .then(result => {
+      res.sendStatus(200);
+    })
+    .catch(e => {
+      console.log(e)
+      res.sendStatus(500);
+    })
+  })
+  .catch(e => {
+    console.log(e);
+    res.sendStatus(500);
+  })
+
+})
+
+//remove booked event
+router.put('/book', checkUserLoggedIn, async(req,res) => {
+  const userId = req.body.userId;
+  const eventId = req.body.eventId;
+
+  if(req.user.id != userId){
+    res.status(401).json({
+      message: "Unauthorized"
+    })
+  }
+
+  User.findByPk(userId)
+  .then(user => {
+    user.removeEvent(eventId)
+    .then(result => {
+      res.sendStatus(200);
+    })
+    .catch(e => {
+      console.log(e)
+      res.sendStatus(500);
+    })
+  })
+  .catch(e => {
+    console.log(e);
+    res.sendStatus(500);
+  })
+
+
+})
+
+//get booked events
+router.get('/book', checkUserLoggedIn, async(req,res) => {
+  const userId = req.user.id;
+
+  // if(req.user.id != userId){
+  //   res.status(401).json({
+  //     message: "Unauthorized"
+  //   })
+  // }
+
+  User.findByPk(userId)
+  .then(user => {
+    user.getEvents()
+    .then(events => {
+      res.status(200).json({
+        events,
+        message: "Booked events retrieved successfully"
+      })
+    })
+    .catch(e => {
+      console.log(e);
+      res.sendStatus(500);
+    })
+  })
+  .catch(e => {
+    console.log(e);
+    res.sendStatus(500);
+  })
+
+
+})
+
+
+
+
+// router.get('/', async(req,res) => {
+//   const user = await User.findByPk(1);
+
+  
+//   user.addEvent(1)
+//   .then(r => {
+//     console.log(r)
+//     user.getEvents().then(e => console.log(e)).catch(e => console.log(e))
+//   })
+//   .catch(e => console.log(e))
+// })
+
+
 
 router.get('/created',checkUserAdmin,  (req,res) => {
   // console.log(req)
