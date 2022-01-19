@@ -93,6 +93,7 @@ router.post('/book', checkUserLoggedIn, async(req,res) => {
 router.put('/book', checkUserLoggedIn, async(req,res) => {
   const userId = req.body.userId;
   const eventId = req.body.eventId;
+  
 
   if(req.user.id != userId){
     res.status(401).json({
@@ -151,7 +152,38 @@ router.get('/book', checkUserLoggedIn, async(req,res) => {
 
 })
 
+//check if user has booked a particular event
+router.get('/book/:eventId/user/:userId', async(req,res) => {
 
+  const userId = Number(req.params.userId);
+  const eventId = Number(req.params.eventId);
+  let isBooked = false;
+  
+
+  User.findByPk(userId)
+  .then(user => {
+    user.hasEvent(eventId)
+    .then(event => {
+      //console.log(event)
+      if(event) isBooked = true;
+      res.status(200).json({
+        isBooked
+      })
+
+    })
+    .catch(e => {
+      console.log(e);
+      res.sendStatus(500);
+    })
+  })
+  .catch(e => {
+    console.log(e);
+    res.sendStatus(500);
+  })
+
+
+
+})
 
 
 // router.get('/', async(req,res) => {

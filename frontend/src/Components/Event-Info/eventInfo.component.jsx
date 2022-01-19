@@ -11,6 +11,7 @@ const EventInfoComponent = (props) => {
 
   const [event, setEvent] = useState(null);
   const [imgUrl, setImgUrl] = useState('');
+  const [isBooked, setIsBooked] = useState(false);
   const user = useSelector(selectUser);
 
   useEffect(() => {
@@ -18,32 +19,60 @@ const EventInfoComponent = (props) => {
     EventService.getEventById(props.match.params.eventId).then((res) => {
       console.log(res.data.event)
       setEvent(res.data.event);
-      setImgUrl(arrayBufferToBase64(res.data.event.imageUrl.data));
+      if(res.data.event){
+        setImgUrl(arrayBufferToBase64(res.data.event.imageUrl.data));
+      }
+      
 
       //console.log(event);
     });
     //console.log(event);
 
-  }, []);
+    if(user){
+      axios.get('http://localhost:4040/events/book/' + props.match.params.eventId + '/user/' + user.id)
+    .then( res => {
+      if(res.data.isBooked) setIsBooked(true);
+    })
+    .catch(e => {
+      console.log(e)
+    })
+    }
+
+  }, [user]);
 
 
 
   const bookEvent = () => {
-    if(event){
+    if(event && user){
       const body = {
         userId: user.id,
         eventId: event.id
       }
       axios.post("http://localhost:4040/events/book",body, { withCredentials: true })
         .then(res => {
-          console.log(res);
+          //console.log(res);
           window.alert("Booked Successfully");
+          setIsBooked(true);
           //setBookedEvents(res.data.events)
         })
         .catch(e => console.log(e))
     }
   }
 
+  const cancelEvent = () => {
+    if(event && user && isBooked){
+      axios.put('http://localhost:4040/events/book', {
+        userId: user.id,
+        eventId: event.id
+      }, { withCredentials: true })
+      .then(res => {
+        window.alert("Booking Removed!");
+        setIsBooked(false);
+
+      })
+      .catch(e => console.log(e));
+    }
+  }
 
   return (
     <div>
@@ -75,8 +104,11 @@ const EventInfoComponent = (props) => {
               <div className="eventFindMore">
                 <a href="#">Find More</a>
               </div>
-
-              <button className="btn btn-primary" onClick={bookEvent}>Book This Event</button>
+              {!isBooked ? 
+              <button className="btn btn-primary" onClick={bookEvent}>Book This Event</button> :
+              <button className="btn btn-primary" onClick={cancelEvent}>Cancel Booking</button>
+              }
+              
             </div>
 
           </div>

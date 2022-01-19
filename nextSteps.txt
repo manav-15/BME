@@ -16,7 +16,7 @@
 14       -> USER BOOKED EVENTS - BE done + fe started(on 18/19)
 
 to do next:
--> remove booked event(fe)
+-> remove booked event(fe) - done
 -> remove created events(fe + be) for admins
 
 
