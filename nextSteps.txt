@@ -17,7 +17,7 @@
 
 to do next:
 -> remove booked event(fe) - done
--> remove created events(fe + be) for admins
+-> remove created events(fe + be) for admins - done
 
 
 Subsequent -> Loading Icons

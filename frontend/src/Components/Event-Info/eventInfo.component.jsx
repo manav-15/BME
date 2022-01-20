@@ -12,30 +12,32 @@ const EventInfoComponent = (props) => {
   const [event, setEvent] = useState(null);
   const [imgUrl, setImgUrl] = useState('');
   const [isBooked, setIsBooked] = useState(false);
+  const [isCreated, setIsCreated] = useState(false)
   const user = useSelector(selectUser);
 
   useEffect(() => {
 
     EventService.getEventById(props.match.params.eventId).then((res) => {
-      console.log(res.data.event)
+      console.log(res.data)
       setEvent(res.data.event);
       if(res.data.event){
         setImgUrl(arrayBufferToBase64(res.data.event.imageUrl.data));
       }
       
-
+      //if(res.data.event.userEmail == user.email) setIsCreated(true);
       //console.log(event);
     });
     //console.log(event);
 
     if(user){
       axios.get('http://localhost:4040/events/book/' + props.match.params.eventId + '/user/' + user.id)
-    .then( res => {
-      if(res.data.isBooked) setIsBooked(true);
-    })
-    .catch(e => {
-      console.log(e)
-    })
+      .then( res => {
+        if(res.data.isBooked) setIsBooked(true);
+        if(res.data.userEmail == user.email) setIsCreated(true);
+      })
+      .catch(e => {
+        console.log(e)
+      })
     }
 
   }, [user]);
@@ -74,6 +76,20 @@ const EventInfoComponent = (props) => {
     }
   }
 
+  const removeEvent = () => {
+    if(event && user){
+      axios.delete('http://localhost:4040/events/' + event.id, {withCredentials: true})
+      .then(res => {
+        console.log(res);
+        window.alert("Event removed succesfully!");
+        window.location.href = '/'
+      })
+      .catch(e => console.log(e));
+    }
+
+  }
+
+
   return (
     <div>
       {/* <h1>{this.props.match.params.eventId}</h1> */}
@@ -107,6 +123,10 @@ const EventInfoComponent = (props) => {
               {!isBooked ? 
               <button className="btn btn-primary" onClick={bookEvent}>Book This Event</button> :
               <button className="btn btn-primary" onClick={cancelEvent}>Cancel Booking</button>
+              }
+              
+              {
+                isCreated && <button className="btn btn-primary ml-1 " onClick={removeEvent}>Remove Event</button>
               }
               
             </div>

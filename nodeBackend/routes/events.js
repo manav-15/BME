@@ -160,16 +160,17 @@ router.get('/book/:eventId/user/:userId', async(req,res) => {
   let isBooked = false;
   
 
-  User.findByPk(userId)
-  .then(user => {
-    user.hasEvent(eventId)
-    .then(event => {
-      //console.log(event)
-      if(event) isBooked = true;
+  Event.findByPk(eventId)
+  .then(event => {
+    const userEmail = event.userEmail;
+    event.getUsers()
+    .then(user => {
+      // console.log(user);
+      if(user) isBooked = true;
       res.status(200).json({
-        isBooked
+        isBooked: true,
+        userEmail
       })
-
     })
     .catch(e => {
       console.log(e);
@@ -180,6 +181,32 @@ router.get('/book/:eventId/user/:userId', async(req,res) => {
     console.log(e);
     res.sendStatus(500);
   })
+
+  // User.findByPk(userId)
+  // .then(user => {
+  //   user.getEvents()
+  //   .then(event => {
+  //     console.log(event)
+  //     let email = '';
+  //     if(event){
+  //       isBooked = true;
+  //       email = event.userEmail;
+  //     }
+  //     res.status(200).json({
+  //       isBooked,
+  //       email
+  //     })
+
+  //   })
+  //   .catch(e => {
+  //     console.log(e);
+  //     res.sendStatus(500);
+  //   })
+  // })
+  // .catch(e => {
+  //   console.log(e);
+  //   res.sendStatus(500);
+  // })
 
 
 
@@ -321,7 +348,33 @@ router.post('/new', checkUserAdmin, async function(req, res) {
   // })
 });
 
+router.delete("/:id", checkUserAdmin, async(req,res)=> {
 
+  const id = req.params.id;
+
+  Event.findByPk(id)
+  .then(event => {
+    if(event.dataValues.userEmail == req.user.email){
+      event.destroy()
+      .then(result => {
+        res.sendStatus(200);
+      })
+      .catch(e => {
+        console.log(e);
+        res.sendStatus(500);
+      })
+    }else {
+      res.sendStatus(401)
+    }
+  })
+  .catch(e => {
+    console.log(e);
+    res.sendStatus(500);
+  })
+
+
+
+})
 
 
 
