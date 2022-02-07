@@ -13,7 +13,7 @@
 12-01-22 -> Understand REDUX and implement context and start working on adding fields in Cards - DONE
 13       -> Work on Event-Info Page and start on user booked events
 
-14       -> USER BOOKED EVENTS - BE done + fe started(on 18/19)
+14       -> USER BOOKED EVENTS - BE done + fe started(on 18/19) - done
 
 to do next:
 -> remove booked event(fe) - done
